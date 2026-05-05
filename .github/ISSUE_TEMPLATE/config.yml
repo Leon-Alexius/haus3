@@ -2,8 +2,4 @@ blank_issues_enabled: true
 contact_links:
   - name: House 3 Board
     url: https://github.com/Leon-Alexius/haus3/issues/new/choose
-    about: Choose a template for feedback, issue reports, or feature requests.blank_issues_enabled: true
-contact_links:
-  - name: House 3 Board
-    url: https://github.com/Leon-Alexius/haus3/issues/new/choose
-    about: Choose a template for feedback or issue reports.
+    about: Choose a template for feedback, issue reports, or feature requests.
