@@ -30,17 +30,21 @@ const initialFeaturedPosterId = initialFeaturedPoster?.id ?? '';
 		</header>
 
 		<div class="poster-controls">
-			<label>
-				<span>Sort by</span>
+			<label class="control">
+				<span>Search</span>
+				<input id="posterSearchInput" placeholder="Search titles, tags, summaries..." />
+			</label>
+			<label class="control">
+				<span>Sort</span>
 				<select id="posterSortSelect">
-					<option value="manual">Manual order</option>
+					<option value="manual">Manual</option>
 					<option value="title">Title A-Z</option>
 					<option value="tag">Tag A-Z</option>
-					<option value="reverse">Reverse manual order</option>
+					<option value="reverse">Reverse</option>
 				</select>
 			</label>
-			<label>
-				<span>Featured post</span>
+			<label class="control">
+				<span>Featured</span>
 				<select id="posterFeatureSelect">
 					{
 						posterEvents.map((poster) => (
@@ -78,36 +82,32 @@ const initialFeaturedPosterId = initialFeaturedPoster?.id ?? '';
 
 		<div class="poster-grid" data-poster-grid>
 			{
-				posterEvents.map((poster, index) => (
-					<article
-						class={`poster-card theme-${poster.theme}`}
-						data-poster-card
-						data-poster-id={poster.id}
-						data-poster-title={poster.title}
-						data-poster-tag={poster.tag}
-						data-poster-order={poster.manualOrder}
-					>
-						<div class="poster-image-wrap">
-							<img
-								src={poster.asset.src}
-								alt={poster.title}
-								loading={index === 0 ? 'eager' : 'lazy'}
-							/>
-						</div>
-						<div class="poster-copy">
-							<p class="tag">{poster.tag}</p>
-							<h4>{poster.title}</h4>
-						</div>
-						<div class="poster-actions">
-							<button class="move-btn" type="button" data-move="up">
-								↑
-							</button>
-							<button class="move-btn" type="button" data-move="down">
-								↓
-							</button>
-						</div>
-					</article>
-				))
+					posterEvents.map((poster, index) => (
+						<article
+							class={`poster-card theme-${poster.theme}`}
+							data-poster-card
+							data-poster-id={poster.id}
+							data-poster-title={poster.title}
+							data-poster-tag={poster.tag}
+							data-poster-summary={poster.summary}
+							data-poster-date={poster.date}
+							data-poster-order={poster.manualOrder}
+							role="button"
+							tabindex="0"
+						>
+							<div class="poster-image-wrap">
+								<img
+									src={poster.asset.src}
+									alt={poster.title}
+									loading={index === 0 ? 'eager' : 'lazy'}
+								/>
+							</div>
+							<div class="poster-copy">
+								<p class="tag">{poster.tag}</p>
+								<h4>{poster.title}</h4>
+							</div>
+						</article>
+					))
 			}
 		</div>
 	</article>
@@ -164,7 +164,7 @@ const initialFeaturedPosterId = initialFeaturedPoster?.id ?? '';
 	const posterGrid = document.querySelector('[data-poster-grid]');
 	const sortSelect = document.getElementById('posterSortSelect');
 	const featureSelect = document.getElementById('posterFeatureSelect');
-	const resetButton = document.getElementById('posterResetOrder');
+	const searchInput = document.getElementById('posterSearchInput');
 	const featuredImage = document.getElementById('featuredPosterImage');
 	const featuredTitle = document.getElementById('featuredPosterTitle');
 	const featuredTag = document.getElementById('featuredPosterTag');
@@ -256,43 +256,51 @@ const initialFeaturedPosterId = initialFeaturedPoster?.id ?? '';
 		});
 	};
 
-	const moveCard = (card, direction) => {
-		if (!card || !card.parentElement) return;
 
-		const sibling =
-			direction === 'up'
-				? card.previousElementSibling
-				: card.nextElementSibling;
-		if (!sibling) return;
+	// make cards clickable (and keyboard-activatable) to feature
+	posterGrid?.addEventListener('click', (event) => {
+		const el = event.target;
+		const card = el instanceof Element ? el.closest('[data-poster-card]') : null;
+		if (!card) return;
+		const id = card.dataset.posterId;
+		if (featureSelect) featureSelect.value = id;
+		renderFeatured(id);
+	});
 
-		if (direction === 'up') {
-			card.parentElement.insertBefore(card, sibling);
-		} else {
-			card.parentElement.insertBefore(sibling, card);
-		}
+	posterGrid?.addEventListener('keydown', (event) => {
+		if (event.key !== 'Enter' && event.key !== ' ') return;
+		const card = (event.target instanceof Element) ? event.target.closest('[data-poster-card]') : null;
+		if (!card) return;
+		event.preventDefault();
+		const id = card.dataset.posterId;
+		if (featureSelect) featureSelect.value = id;
+		renderFeatured(id);
+	});
 
-		syncManualOrder();
-		if (sortSelect?.value === 'manual') {
-			featureSelect.value = card.dataset.posterId;
-			renderFeatured(card.dataset.posterId);
-		}
+	// filtering
+	const filterCards = () => {
+		const q = (searchInput?.value ?? '').trim().toLowerCase();
+		getCards().forEach((card) => {
+			const hay = [
+				card.dataset.posterTitle,
+				card.dataset.posterTag,
+				card.dataset.posterSummary,
+				card.dataset.posterDate,
+			]
+				.filter(Boolean)
+				.join(' ')
+				.toLowerCase();
+			card.style.display = q === '' || hay.includes(q) ? '' : 'none';
+		});
 	};
 
-	posterGrid?.addEventListener('click', (event) => {
-		const target = event.target;
-		if (!(target instanceof HTMLButtonElement)) return;
-
-		const card = target.closest('[data-poster-card]');
-		if (!card) return;
-
-		const direction = target.dataset.move;
-		if (direction === 'up' || direction === 'down') {
-			moveCard(card, direction);
-		}
+	searchInput?.addEventListener('input', () => {
+		filterCards();
 	});
 
 	sortSelect?.addEventListener('change', () => {
 		sortCards();
+		filterCards();
 		renderFeatured(featureSelect?.value ?? initialFeaturedPosterId);
 	});
 
@@ -300,19 +308,10 @@ const initialFeaturedPosterId = initialFeaturedPoster?.id ?? '';
 		renderFeatured(featureSelect.value);
 	});
 
-	resetButton?.addEventListener('click', () => {
-		if (sortSelect) sortSelect.value = 'manual';
-		const manualIds = posters
-			.slice()
-			.sort((left, right) => left.manualOrder - right.manualOrder)
-			.map((poster) => poster.id);
-		reorderGrid(manualIds);
-		syncManualOrder();
-		if (featureSelect) featureSelect.value = initialFeaturedPosterId;
-		renderFeatured(initialFeaturedPosterId);
-	});
+	// reset button removed — manual ordering is preserved via data
 
 	sortCards();
+	filterCards();
 	renderFeatured(featureSelect?.value ?? initialFeaturedPosterId);
 </script>
 
@@ -422,14 +421,22 @@ const initialFeaturedPosterId = initialFeaturedPoster?.id ?? '';
 
 	.poster-controls {
 		display: grid;
-		grid-template-columns: 1fr 1fr auto;
+		grid-template-columns: 1fr 1fr 1fr;
 		gap: 0.75rem;
 		margin-bottom: 0.9rem;
 	}
 
-	.poster-controls label {
+	.poster-controls .control {
 		display: grid;
-		gap: 0.3rem;
+		gap: 0.35rem;
+	}
+
+	.poster-controls input {
+		padding: 0.6rem 0.75rem;
+		border-radius: 0.8rem;
+		border: 1px solid rgba(47, 81, 56, 0.18);
+		background: #fff;
+		font-size: 0.95rem;
 	}
 
 	.poster-controls span {
@@ -443,8 +450,17 @@ const initialFeaturedPosterId = initialFeaturedPoster?.id ?? '';
 		width: 100%;
 		border-radius: 0.8rem;
 		border: 1px solid rgba(47, 81, 56, 0.2);
-		padding: 0.75rem 0.8rem;
+		padding: 0.6rem 0.8rem;
 		background: #fff;
+	}
+
+	.poster-card {
+		cursor: pointer;
+	}
+
+	.poster-card:focus {
+		outline: 3px solid rgba(47,81,56,0.14);
+		outline-offset: 2px;
 	}
 
 	.featured-card {
