@@ -1,17 +1,37 @@
 {
   "name": "haus3",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=24.0.0"
   },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "typecheck": "astro check",
+    "lint": "eslint src --ext .js,.mjs,.ts --max-warnings=0",
+    "lint:fix": "eslint src --ext .js,.mjs,.ts --fix",
+    "format": "prettier \"astro.config.mjs\" \"eslint.config.mjs\" \".prettierrc.mjs\" \".github/**/*.yml\" \"src/**/*.{astro,ts,js}\" --write",
+    "format:check": "prettier \"astro.config.mjs\" \"eslint.config.mjs\" \".prettierrc.mjs\" \".github/**/*.yml\" \"src/**/*.{astro,ts,js}\" --check"
   },
   "dependencies": {
-    "astro": "^6.2.2"
+    "astro": "^6.2.2",
+    "@tailwindcss/vite": "^4.2.2",
+    "tailwindcss": "^4.2.2",
+    "sharp": "^0.34.3",
+    "@astrojs/rss": "^4.0.18",
+    "@astrojs/sitemap": "^3.7.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.2.1",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.8.3",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.1"
   }
 }

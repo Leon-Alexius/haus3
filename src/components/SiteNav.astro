@@ -1,0 +1,40 @@
+---
+const { currentPath = '/' } = Astro.props;
+
+const links = [
+	{ href: '/', label: 'Home' },
+	{ href: '/announcements/', label: 'Announcements' },
+	{ href: '/contact/', label: 'Contact' },
+];
+---
+
+<nav
+	aria-label="Primary"
+	class="flex w-full flex-col gap-3 py-1 sm:flex-row sm:items-center sm:justify-between"
+>
+	<a class="font-serif text-lg font-bold text-[#223227] no-underline" href="/"
+		>Haus 3 Board</a
+	>
+	<div class="flex flex-wrap gap-2">
+		{
+			links.map((link) => {
+				const isActive =
+					currentPath === link.href || currentPath === `${link.href}index.html`;
+
+				return (
+					<a
+						href={link.href}
+						aria-current={isActive ? 'page' : undefined}
+						class:list={{
+							'rounded-full border border-[#2f5138]/10 px-3.5 py-2 text-sm font-semibold no-underline': true,
+							'bg-white/55 text-[#2f5138]': !isActive,
+							'bg-[#223227] text-[#fbf8ef]': isActive,
+						}}
+					>
+						{link.label}
+					</a>
+				);
+			})
+		}
+	</div>
+</nav>

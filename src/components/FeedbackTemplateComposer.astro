@@ -1,0 +1,253 @@
+---
+import {
+	feedbackTemplates,
+	supportEmail,
+	defaultFeedbackTemplateId,
+} from '../data/feedback';
+
+const templates = feedbackTemplates;
+const initialTemplate =
+	templates.find((template) => template.id === defaultFeedbackTemplateId) ??
+	templates[0];
+
+const templateData = JSON.stringify(templates);
+const initialMailHref = `mailto:${supportEmail}?subject=${encodeURIComponent(initialTemplate.subject)}&body=${encodeURIComponent(initialTemplate.body)}`;
+---
+
+<section class="grid gap-4" data-feedback-composer>
+	<article
+		class="flex w-full min-h-full flex-col rounded-2xl border border-[#2f5138]/16 bg-[rgba(255,253,246,0.94)] p-4 shadow-[0_18px_45px_rgba(29,39,30,0.12)] lg:p-5"
+	>
+		<p
+			class="m-0 text-xs font-semibold uppercase tracking-[0.08em] text-[#7d8b81]"
+		>
+			Email template flow
+		</p>
+		<h3
+			class="m-0 mt-1 font-serif text-2xl font-bold tracking-[0.01em] text-[#223227]"
+		>
+			Choose a format, then send in one click
+		</h3>
+		<p
+			id="activeTemplateDescription"
+			class="mt-3 w-full max-w-none text-base leading-6 text-[#4a5750]"
+		>
+			{initialTemplate.description}
+		</p>
+		<div class="mt-4 flex flex-wrap gap-3">
+			<button
+				id="openTemplatePicker"
+				type="button"
+				class="inline-flex items-center justify-center rounded-full bg-[linear-gradient(125deg,#2f5138,#275035)] px-4 py-3 text-sm font-bold text-[#fbf8ef]"
+			>
+				Choose email template
+			</button>
+			<a
+				id="templateMailLink"
+				class="inline-flex items-center justify-center rounded-full bg-[linear-gradient(125deg,#96553d,#b76c46)] px-4 py-3 text-sm font-bold text-[#fbf8ef] no-underline"
+				href={initialMailHref}
+			>
+				{initialTemplate.buttonLabel}
+			</a>
+		</div>
+	</article>
+
+	<dialog
+		id="templatePickerDialog"
+		class="m-auto w-[min(92vw,960px)] rounded-2xl border border-[#2f5138]/20 bg-[rgba(255,253,246,0.98)] p-0 text-[#1f2924] shadow-[0_30px_80px_rgba(25,34,27,0.34)] backdrop:bg-[rgba(26,35,29,0.48)]"
+	>
+		<div
+			class="grid gap-4 p-4 lg:grid-cols-[minmax(240px,0.8fr)_minmax(0,1.2fr)] lg:gap-5 lg:p-5"
+		>
+			<div class="grid gap-3 lg:content-start">
+				<div class="flex items-start justify-between gap-3">
+					<div>
+						<p
+							class="m-0 text-xs font-semibold uppercase tracking-[0.08em] text-[#7d8b81]"
+						>
+							Template picker
+						</p>
+						<h4 class="m-0 mt-1 font-serif text-xl font-bold text-[#223227]">
+							Select your message style
+						</h4>
+					</div>
+					<button
+						id="closeTemplatePickerTop"
+						type="button"
+						class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#2f5138]/24 bg-white text-xl font-semibold leading-none text-[#2f5138]"
+						aria-label="Close template picker"
+					>
+						&times;
+					</button>
+				</div>
+				<div class="grid gap-2" aria-label="Feedback templates">
+					{
+						templates.map((template) => (
+							<button
+								type="button"
+								class="w-full rounded-xl border border-[#2f5138]/16 bg-white px-4 py-3 text-left shadow-[0_10px_24px_rgba(29,39,30,0.08)] transition hover:-translate-y-px hover:shadow-[0_16px_30px_rgba(29,39,30,0.14)]"
+								data-template-button
+								data-template-id={template.id}
+							>
+								<p class="m-0 text-xs font-semibold uppercase tracking-[0.08em] text-[#7d8b81]">
+									{template.label}
+								</p>
+								<p class="m-0 mt-1 text-sm leading-5 text-[#4a5750]">
+									{template.description}
+								</p>
+							</button>
+						))
+					}
+				</div>
+			</div>
+
+			<div
+				class="grid gap-3 rounded-2xl border border-[#2f5138]/16 bg-[rgba(255,253,246,0.92)] p-4 shadow-[0_18px_45px_rgba(29,39,30,0.1)]"
+			>
+				<p
+					class="m-0 text-xs font-semibold uppercase tracking-[0.08em] text-[#7d8b81]"
+				>
+					Email preview
+				</p>
+				<h5
+					id="templatePreviewTitle"
+					class="m-0 font-serif text-lg font-bold text-[#223227]"
+				>
+					{initialTemplate.label}
+				</h5>
+				<textarea
+					id="templatePreview"
+					rows="16"
+					readonly
+					class="min-h-64 w-full resize-y rounded-xl border border-[#2f5138]/20 bg-white p-4 font-mono text-[0.92rem] leading-6 text-[#1f2924]"
+					>{initialTemplate.body}</textarea
+				>
+				<div class="mt-1 flex flex-wrap gap-3">
+					<a
+						id="dialogTemplateMailLink"
+						class="inline-flex items-center justify-center rounded-full bg-[linear-gradient(125deg,#2f5138,#275035)] px-4 py-3 text-sm font-bold text-[#fbf8ef] no-underline"
+						href={initialMailHref}
+					>
+						{initialTemplate.buttonLabel}
+					</a>
+					<button
+						id="closeTemplatePickerBottom"
+						type="button"
+						class="inline-flex items-center justify-center rounded-full border border-[#2f5138]/28 bg-white px-4 py-3 text-sm font-bold text-[#2f5138]"
+					>
+						Close
+					</button>
+				</div>
+			</div>
+		</div>
+	</dialog>
+
+	<script define:vars={{ templateData, supportEmail }}>
+		const templates = JSON.parse(templateData);
+		const dialog = document.getElementById('templatePickerDialog');
+		const openDialogButton = document.getElementById('openTemplatePicker');
+		const closeDialogTop = document.getElementById('closeTemplatePickerTop');
+		const closeDialogBottom = document.getElementById(
+			'closeTemplatePickerBottom',
+		);
+		const templateButtons = Array.from(
+			document.querySelectorAll('[data-template-button]'),
+		);
+		const preview = document.getElementById('templatePreview');
+		const previewTitle = document.getElementById('templatePreviewTitle');
+		const mailLink = document.getElementById('templateMailLink');
+		const dialogMailLink = document.getElementById('dialogTemplateMailLink');
+		const activeTemplateDescription = document.getElementById(
+			'activeTemplateDescription',
+		);
+
+		const updateTemplate = (templateId) => {
+			const template =
+				templates.find((item) => item.id === templateId) ?? templates[0];
+
+			if (!template) {
+				return;
+			}
+
+			if (preview) {
+				preview.value = template.body;
+			}
+
+			if (previewTitle) {
+				previewTitle.textContent = template.label;
+			}
+
+			if (mailLink) {
+				const href = `mailto:${supportEmail}?subject=${encodeURIComponent(template.subject)}&body=${encodeURIComponent(template.body)}`;
+				mailLink.href = href;
+				mailLink.textContent = template.buttonLabel;
+
+				if (dialogMailLink) {
+					dialogMailLink.href = href;
+					dialogMailLink.textContent = template.buttonLabel;
+				}
+			}
+
+			if (activeTemplateDescription) {
+				activeTemplateDescription.textContent = template.description;
+			}
+
+			templateButtons.forEach((button) => {
+				const isActive =
+					button.getAttribute('data-template-id') === template.id;
+				button.classList.toggle('ring-2', isActive);
+				button.classList.toggle('ring-[#2f5138]/50', isActive);
+				button.classList.toggle(
+					'shadow-[0_16px_30px_rgba(29,39,30,0.14)]',
+					isActive,
+				);
+				button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+			});
+		};
+
+		templateButtons.forEach((button) => {
+			button.addEventListener('click', (event) => {
+				const target = event.currentTarget;
+				if (target instanceof HTMLElement) {
+					updateTemplate(
+						target.getAttribute('data-template-id') ?? templates[0]?.id,
+					);
+				}
+			});
+		});
+
+		const closeDialog = () => {
+			if (dialog instanceof HTMLDialogElement && dialog.open) {
+				dialog.close();
+			}
+		};
+
+		openDialogButton?.addEventListener('click', () => {
+			if (dialog instanceof HTMLDialogElement) {
+				dialog.showModal();
+			}
+		});
+
+		closeDialogTop?.addEventListener('click', closeDialog);
+		closeDialogBottom?.addEventListener('click', closeDialog);
+
+		dialog?.addEventListener('click', (event) => {
+			if (!(dialog instanceof HTMLDialogElement)) {
+				return;
+			}
+
+			const bounds = dialog.getBoundingClientRect();
+			const clickedOutside =
+				event.clientX < bounds.left ||
+				event.clientX > bounds.right ||
+				event.clientY < bounds.top ||
+				event.clientY > bounds.bottom;
+
+			if (clickedOutside) {
+				dialog.close();
+			}
+		});
+
+		updateTemplate(templates[0]?.id);
+	</script>
+</section>

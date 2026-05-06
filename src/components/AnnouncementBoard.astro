@@ -1,0 +1,625 @@
+---
+import type {
+	KioskUpdate,
+	PosterEvent,
+	TextAnnouncement,
+} from '../data/announcements';
+
+const props = Astro.props as {
+	posterEvents?: PosterEvent[];
+	textAnnouncements?: TextAnnouncement[];
+	kioskUpdates?: KioskUpdate[];
+};
+
+const posterEvents: PosterEvent[] = props.posterEvents ?? [];
+const textAnnouncements: TextAnnouncement[] = props.textAnnouncements ?? [];
+const kioskUpdates: KioskUpdate[] = props.kioskUpdates ?? [];
+
+const posterData = JSON.stringify(posterEvents);
+const initialFeaturedPoster = posterEvents[0];
+const initialFeaturedPosterId = initialFeaturedPoster?.id ?? '';
+---
+
+<section class="board-grid">
+	<article id="posters" class="panel poster-panel">
+		<header class="section-head">
+			<div>
+				<p class="eyebrow">Events gallery</p>
+				<h3>{posterEvents.length} poster(s)</h3>
+			</div>
+		</header>
+
+		<div class="poster-controls">
+			<label>
+				<span>Sort by</span>
+				<select id="posterSortSelect">
+					<option value="manual">Manual order</option>
+					<option value="title">Title A-Z</option>
+					<option value="tag">Tag A-Z</option>
+					<option value="reverse">Reverse manual order</option>
+				</select>
+			</label>
+			<label>
+				<span>Featured post</span>
+				<select id="posterFeatureSelect">
+					{
+						posterEvents.map((poster) => (
+							<option
+								value={poster.id}
+								selected={poster.id === initialFeaturedPosterId}
+							>
+								{poster.title}
+							</option>
+						))
+					}
+				</select>
+			</label>
+		</div>
+
+		<div class="featured-card" data-featured-card>
+			<img
+				id="featuredPosterImage"
+				src={initialFeaturedPoster?.asset.src}
+				alt={initialFeaturedPoster?.title ?? 'Featured poster'}
+			/>
+			<div class="featured-copy">
+				<p class="tag" id="featuredPosterTag">{initialFeaturedPoster?.tag}</p>
+				<h4 id="featuredPosterTitle">{initialFeaturedPoster?.title}</h4>
+				<p id="featuredPosterSummary">{initialFeaturedPoster?.summary}</p>
+				<div class="featured-meta">
+					<span id="featuredPosterDate">{initialFeaturedPoster?.date}</span>
+					<span id="featuredPosterWhen">{initialFeaturedPoster?.when}</span>
+				</div>
+				<p class="featured-note" id="featuredPosterNote">
+					{initialFeaturedPoster?.featuredNote}
+				</p>
+			</div>
+		</div>
+
+		<div class="poster-grid" data-poster-grid>
+			{
+				posterEvents.map((poster, index) => (
+					<article
+						class={`poster-card theme-${poster.theme}`}
+						data-poster-card
+						data-poster-id={poster.id}
+						data-poster-title={poster.title}
+						data-poster-tag={poster.tag}
+						data-poster-order={poster.manualOrder}
+					>
+						<div class="poster-image-wrap">
+							<img
+								src={poster.asset.src}
+								alt={poster.title}
+								loading={index === 0 ? 'eager' : 'lazy'}
+							/>
+						</div>
+						<div class="poster-copy">
+							<p class="tag">{poster.tag}</p>
+							<h4>{poster.title}</h4>
+						</div>
+						<div class="poster-actions">
+							<button class="move-btn" type="button" data-move="up">
+								↑
+							</button>
+							<button class="move-btn" type="button" data-move="down">
+								↓
+							</button>
+						</div>
+					</article>
+				))
+			}
+		</div>
+	</article>
+
+	<div class="rail">
+		<article id="texts" class="panel text-panel">
+			<header class="section-head">
+				<div>
+					<p class="eyebrow">Announcements</p>
+					<h3>{textAnnouncements.length} short notice(s)</h3>
+				</div>
+			</header>
+
+			<div class="timeline">
+				{
+					textAnnouncements.map((item) => (
+						<article class="timeline-item">
+							<p class="meta">{item.meta}</p>
+							<h4>{item.title}</h4>
+							<p>{item.body}</p>
+						</article>
+					))
+				}
+			</div>
+		</article>
+
+		<article id="kiosk" class="panel kiosk-panel">
+			<header class="section-head">
+				<div>
+					<p class="eyebrow">StuSta Kiosk</p>
+					<h3>{kioskUpdates.length} kiosk update(s)</h3>
+				</div>
+			</header>
+
+			<div class="kiosk-list">
+				{
+					kioskUpdates.map((item) => (
+						<article class="kiosk-card">
+							<div>
+								<h4>{item.title}</h4>
+								<p>{item.detail}</p>
+							</div>
+							<strong>{item.price}</strong>
+						</article>
+					))
+				}
+			</div>
+		</article>
+	</div>
+</section>
+
+<script define:vars={{ posterData, initialFeaturedPosterId }}>
+	const posters = JSON.parse(posterData);
+	const posterGrid = document.querySelector('[data-poster-grid]');
+	const sortSelect = document.getElementById('posterSortSelect');
+	const featureSelect = document.getElementById('posterFeatureSelect');
+	const resetButton = document.getElementById('posterResetOrder');
+	const featuredImage = document.getElementById('featuredPosterImage');
+	const featuredTitle = document.getElementById('featuredPosterTitle');
+	const featuredTag = document.getElementById('featuredPosterTag');
+	const featuredSummary = document.getElementById('featuredPosterSummary');
+	const featuredDate = document.getElementById('featuredPosterDate');
+	const featuredWhen = document.getElementById('featuredPosterWhen');
+	const featuredNote = document.getElementById('featuredPosterNote');
+
+	const cardMap = new Map(
+		Array.from(document.querySelectorAll('[data-poster-card]')).map((card) => [
+			card.dataset.posterId,
+			card,
+		]),
+	);
+
+	const getCards = () =>
+		Array.from(document.querySelectorAll('[data-poster-card]'));
+
+	const getPoster = (posterId) =>
+		posters.find((poster) => poster.id === posterId) ?? posters[0];
+
+	const renderFeatured = (posterId) => {
+		const poster = getPoster(posterId);
+		if (!poster) return;
+
+		getCards().forEach((card) => {
+			card.classList.toggle('active', card.dataset.posterId === poster.id);
+		});
+
+		if (featuredImage) {
+			featuredImage.src = poster.asset.src;
+			featuredImage.alt = poster.title;
+		}
+		if (featuredTitle) featuredTitle.textContent = poster.title;
+		if (featuredTag) featuredTag.textContent = poster.tag;
+		if (featuredSummary) featuredSummary.textContent = poster.summary;
+		if (featuredDate) featuredDate.textContent = poster.date;
+		if (featuredWhen) featuredWhen.textContent = poster.when;
+		if (featuredNote) featuredNote.textContent = poster.featuredNote;
+	};
+
+	const reorderGrid = (posterIds) => {
+		if (!posterGrid) return;
+		posterIds.forEach((posterId) => {
+			const card = cardMap.get(posterId);
+			if (card) posterGrid.appendChild(card);
+		});
+	};
+
+	const sortCards = () => {
+		const sortMode = sortSelect?.value ?? 'manual';
+		const cards = getCards();
+		const posterIds = cards.map((card) => card.dataset.posterId);
+
+		const nextIds = [...posterIds].sort((leftId, rightId) => {
+			const leftPoster = getPoster(leftId);
+			const rightPoster = getPoster(rightId);
+			const leftOrder = Number(
+				document.querySelector(`[data-poster-id="${leftId}"]`)?.dataset
+					.posterOrder ?? leftPoster.manualOrder,
+			);
+			const rightOrder = Number(
+				document.querySelector(`[data-poster-id="${rightId}"]`)?.dataset
+					.posterOrder ?? rightPoster.manualOrder,
+			);
+
+			if (sortMode === 'title') {
+				return leftPoster.title.localeCompare(rightPoster.title);
+			}
+
+			if (sortMode === 'tag') {
+				const tagCompare = leftPoster.tag.localeCompare(rightPoster.tag);
+				return tagCompare !== 0 ? tagCompare : leftOrder - rightOrder;
+			}
+
+			if (sortMode === 'reverse') {
+				return rightOrder - leftOrder;
+			}
+
+			return leftOrder - rightOrder;
+		});
+
+		reorderGrid(nextIds);
+	};
+
+	const syncManualOrder = () => {
+		getCards().forEach((card, index) => {
+			card.dataset.posterOrder = String(index + 1);
+		});
+	};
+
+	const moveCard = (card, direction) => {
+		if (!card || !card.parentElement) return;
+
+		const sibling =
+			direction === 'up'
+				? card.previousElementSibling
+				: card.nextElementSibling;
+		if (!sibling) return;
+
+		if (direction === 'up') {
+			card.parentElement.insertBefore(card, sibling);
+		} else {
+			card.parentElement.insertBefore(sibling, card);
+		}
+
+		syncManualOrder();
+		if (sortSelect?.value === 'manual') {
+			featureSelect.value = card.dataset.posterId;
+			renderFeatured(card.dataset.posterId);
+		}
+	};
+
+	posterGrid?.addEventListener('click', (event) => {
+		const target = event.target;
+		if (!(target instanceof HTMLButtonElement)) return;
+
+		const card = target.closest('[data-poster-card]');
+		if (!card) return;
+
+		const direction = target.dataset.move;
+		if (direction === 'up' || direction === 'down') {
+			moveCard(card, direction);
+		}
+	});
+
+	sortSelect?.addEventListener('change', () => {
+		sortCards();
+		renderFeatured(featureSelect?.value ?? initialFeaturedPosterId);
+	});
+
+	featureSelect?.addEventListener('change', () => {
+		renderFeatured(featureSelect.value);
+	});
+
+	resetButton?.addEventListener('click', () => {
+		if (sortSelect) sortSelect.value = 'manual';
+		const manualIds = posters
+			.slice()
+			.sort((left, right) => left.manualOrder - right.manualOrder)
+			.map((poster) => poster.id);
+		reorderGrid(manualIds);
+		syncManualOrder();
+		if (featureSelect) featureSelect.value = initialFeaturedPosterId;
+		renderFeatured(initialFeaturedPosterId);
+	});
+
+	sortCards();
+	renderFeatured(featureSelect?.value ?? initialFeaturedPosterId);
+</script>
+
+<style>
+	.board-intro {
+		display: grid;
+		gap: 0.85rem;
+	}
+
+	.stats {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0.8rem;
+	}
+
+	.stat-card,
+	.panel {
+		background: rgba(255, 253, 246, 0.92);
+		border: 1px solid rgba(47, 81, 56, 0.16);
+		border-radius: 1rem;
+		box-shadow: 0 18px 45px rgba(29, 39, 30, 0.12);
+	}
+
+	.stat-card {
+		padding: 0.95rem;
+	}
+
+	.stat-card p,
+	.stat-card span,
+	.lead,
+	.panel p {
+		margin: 0;
+	}
+
+	.stat-card p,
+	.eyebrow,
+	.meta,
+	.tag {
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		font-size: 0.75rem;
+	}
+
+	.stat-card strong {
+		display: block;
+		font-size: 1.6rem;
+		margin: 0.35rem 0 0.15rem;
+		color: #223227;
+	}
+
+	.stat-card span {
+		color: #5e6b62;
+		font-size: 0.9rem;
+	}
+
+	.filters {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.55rem;
+	}
+
+	.filters a,
+	.count-pill,
+	.ghost-btn {
+		border-radius: 999px;
+		padding: 0.55rem 0.85rem;
+		background: rgba(255, 255, 255, 0.68);
+		border: 1px solid rgba(47, 81, 56, 0.14);
+		color: #2f5138;
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	.ghost-btn {
+		cursor: pointer;
+		background: rgba(47, 81, 56, 0.08);
+	}
+
+	.lead {
+		width: 100%;
+		color: #3d4c42;
+	}
+
+	.board-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.95fr);
+		gap: 1rem;
+		align-items: start;
+	}
+
+	.panel {
+		padding: 1rem;
+	}
+
+	.section-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 0.85rem;
+	}
+
+	.section-head h3 {
+		margin: 0.2rem 0 0;
+		font-size: 1.35rem;
+	}
+
+	.poster-controls {
+		display: grid;
+		grid-template-columns: 1fr 1fr auto;
+		gap: 0.75rem;
+		margin-bottom: 0.9rem;
+	}
+
+	.poster-controls label {
+		display: grid;
+		gap: 0.3rem;
+	}
+
+	.poster-controls span {
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: #68766d;
+	}
+
+	.poster-controls select {
+		width: 100%;
+		border-radius: 0.8rem;
+		border: 1px solid rgba(47, 81, 56, 0.2);
+		padding: 0.75rem 0.8rem;
+		background: #fff;
+	}
+
+	.featured-card {
+		display: grid;
+		grid-template-columns: minmax(220px, 0.9fr) minmax(0, 1.1fr);
+		gap: 0.9rem;
+		padding: 0.9rem;
+		margin-bottom: 0.95rem;
+		border-radius: 1rem;
+		background: linear-gradient(160deg, #fef0cc, #e7f0d3);
+		border: 1px solid rgba(47, 81, 56, 0.16);
+	}
+
+	.featured-card img,
+	.poster-image-wrap img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	.featured-card img {
+		min-height: 220px;
+		border-radius: 0.85rem;
+	}
+
+	.featured-copy {
+		display: grid;
+		align-content: start;
+		gap: 0.5rem;
+	}
+
+	.featured-copy h4,
+	.poster-card h4,
+	.timeline-item h4,
+	.kiosk-card h4 {
+		margin: 0;
+		font-size: 1.05rem;
+		color: #223227;
+	}
+
+	.featured-meta,
+	.poster-meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.7rem;
+		color: #647167;
+		font-size: 0.88rem;
+	}
+
+	.featured-note,
+	.poster-card p,
+	.timeline-item p,
+	.kiosk-card p {
+		color: #46544c;
+		line-height: 1.5;
+	}
+
+	.poster-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+		gap: 0.75rem;
+	}
+
+	.poster-card {
+		position: relative;
+		display: grid;
+		gap: 0.7rem;
+		padding: 0.85rem;
+		border-radius: 0.95rem;
+		border: 1px solid rgba(47, 81, 56, 0.16);
+		background: #fffdf6;
+	}
+
+	.poster-card.active {
+		outline: 2px solid rgba(47, 81, 56, 0.45);
+		outline-offset: 2px;
+	}
+
+	.poster-image-wrap {
+		border-radius: 0.8rem;
+		overflow: hidden;
+		aspect-ratio: 4 / 5;
+		background: #e8e1ce;
+	}
+
+	.theme-warm .poster-image-wrap {
+		box-shadow: inset 0 0 0 1px rgba(170, 86, 67, 0.18);
+	}
+
+	.theme-sage .poster-image-wrap {
+		box-shadow: inset 0 0 0 1px rgba(47, 81, 56, 0.18);
+	}
+
+	.theme-sand .poster-image-wrap {
+		box-shadow: inset 0 0 0 1px rgba(143, 109, 63, 0.18);
+	}
+
+	.theme-mint .poster-image-wrap {
+		box-shadow: inset 0 0 0 1px rgba(74, 123, 95, 0.18);
+	}
+
+	.poster-actions {
+		display: flex;
+		gap: 0.45rem;
+	}
+
+	.move-btn {
+		width: 2.2rem;
+		height: 2.2rem;
+		border-radius: 999px;
+		border: 1px solid rgba(47, 81, 56, 0.2);
+		background: rgba(47, 81, 56, 0.08);
+		color: #223227;
+		font-weight: 800;
+		cursor: pointer;
+	}
+
+	.rail {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.timeline {
+		display: grid;
+		gap: 0.7rem;
+	}
+
+	.timeline-item {
+		padding: 0.85rem;
+		border-radius: 0.85rem;
+		background: #fffdf6;
+		border: 1px solid rgba(47, 81, 56, 0.14);
+	}
+
+	.meta,
+	.tag {
+		margin: 0 0 0.35rem;
+		color: #7d8b81;
+	}
+
+	.kiosk-list {
+		display: grid;
+		gap: 0.7rem;
+	}
+
+	.kiosk-card {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		align-items: flex-start;
+		padding: 0.85rem;
+		border-radius: 0.85rem;
+		background: linear-gradient(160deg, #f5f9ef, #e5eed6);
+		border: 1px solid rgba(47, 81, 56, 0.18);
+	}
+
+	.kiosk-card strong {
+		white-space: nowrap;
+		color: #8b4e3c;
+	}
+
+	@media (max-width: 1080px) {
+		.poster-controls,
+		.featured-card,
+		.board-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 720px) {
+		.section-head,
+		.kiosk-card {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+	}
+</style>

@@ -1,46 +1,46 @@
-# Astro Starter Kit: Basics
+# Haus 3 Board
 
-```sh
-npm create astro@latest -- --template basics
-```
+<p align="left">
+  <img src="https://img.shields.io/badge/Astro-6.2.2-blueviolet?logo=astro&logoColor=white" alt="Astro 6.2.2" />
+  <img src="https://img.shields.io/badge/TailwindCSS-4.2-38bdf8?logo=tailwindcss&logoColor=white" alt="TailwindCSS 4.2" />
+  <img src="https://img.shields.io/badge/Node-22.12%2B-339933?logo=nodedotjs&logoColor=white" alt="Node 22.12+" />
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="MIT License" />
+</p>
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Haus 3 Board is a small Astro site for news, updates, and feedback intake.
+## Tech Stack
 
-## 🚀 Project Structure
+- [Astro](https://astro.build/)
+- [Tailwind CSS](https://tailwindcss.com/)
 
-Inside of your Astro project, you'll see the following folders and files:
+## Project Structure
 
 ```text
 /
+├── astro.config.mjs
+├── package.json
 ├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+├── src/
+│   ├── assets/
+│   │   └── posters/
+│   ├── components/
+│   ├── data/
+│   ├── layouts/
+│   ├── pages/
+│   └── styles/
+└── README.md
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Development
 
-## 🧞 Commands
+```sh
+npm install
+npm run dev
+```
 
-All commands are run from the root of the project, from a terminal:
+## Build and Preview
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```sh
+npm run build
+npm run preview
+```

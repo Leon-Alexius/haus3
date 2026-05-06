@@ -1,11 +1,185 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import PageShell from '../components/PageShell.astro';
+import { floorSpeakers, houseSpeakerProfile, meetings } from '../data/site';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<PageShell
+	title="Welcome!"
+	lead={`The new centralized board for news, events, and resources.`}
+	currentPath="/"
+>
+	<section class="grid gap-4 lg:grid-cols-3">
+		<article
+			class="w-full rounded-2xl border border-[#2f5138]/16 bg-[linear-gradient(160deg,#f6eacb,#f0d8b5)] p-4 shadow-[0_18px_45px_rgba(29,39,30,0.12)]"
+		>
+			<h2
+				class="m-0 font-serif text-2xl font-bold tracking-[0.01em] text-[#223227]"
+			>
+				Haussprecher
+			</h2>
+			<p class="mt-3 w-full max-w-none text-base leading-6 text-[#4a5750]">
+				{houseSpeakerProfile.name} from House 3B
+			</p>
+		</article>
+
+		<article
+			class="w-full rounded-2xl border border-[#2f5138]/16 bg-[rgba(255,253,246,0.92)] p-4 shadow-[0_18px_45px_rgba(29,39,30,0.12)]"
+		>
+			<h2
+				class="m-0 font-serif text-2xl font-bold tracking-[0.01em] text-[#223227]"
+			>
+				What Is This Site?
+			</h2>
+			<p class="mt-3 w-full max-w-none text-base leading-6 text-[#4a5750]">
+				A central board for latest information, announcements, and reports. We
+				also have <a
+					href="https://wiki.stusta.de/Haus_3"
+					class="text-[#287b3e] hover:underline">this wiki</a
+				>.
+			</p>
+		</article>
+
+		<article
+			class="w-full rounded-2xl border border-[#2f5138]/16 bg-[rgba(255,253,246,0.92)] p-4 shadow-[0_18px_45px_rgba(29,39,30,0.12)]"
+		>
+			<h2
+				class="m-0 font-serif text-2xl font-bold tracking-[0.01em] text-[#223227]"
+			>
+				Last Updated
+			</h2>
+			<p class="mt-3 w-full max-w-none text-base leading-6 text-[#4a5750]">
+				Wednesday, 06.05.2026
+			</p>
+		</article>
+	</section>
+
+	<section
+		class="w-full rounded-2xl border border-[#2f5138]/16 bg-[rgba(255,253,246,0.92)] p-4 shadow-[0_18px_45px_rgba(29,39,30,0.12)]"
+	>
+		<header
+			class="mb-4 flex items-center justify-between gap-4 max-[720px]:flex-col max-[720px]:items-start"
+		>
+			<div class="w-full">
+				<p
+					class="m-0 text-xs font-semibold uppercase tracking-[0.08em] text-[#7d8b81]"
+				>
+					Floor speakers
+				</p>
+				<h2
+					class="m-0 mt-1 font-serif text-2xl font-bold tracking-[0.01em] text-[#223227]"
+				>
+					House and floor references
+				</h2>
+			</div>
+		</header>
+		<div class="w-full overflow-x-auto">
+			<table class="w-full border-collapse text-left text-[0.95rem]">
+				<thead>
+					<tr>
+						<th
+							class="border-b border-[#2f5138]/16 px-3 py-2 text-left font-semibold text-[#2f5138]"
+							>Name</th
+						>
+						<th
+							class="border-b border-[#2f5138]/16 px-3 py-2 text-left font-semibold text-[#2f5138]"
+							>House</th
+						>
+						<th
+							class="border-b border-[#2f5138]/16 px-3 py-2 text-left font-semibold text-[#2f5138]"
+							>Floor</th
+						>
+					</tr>
+				</thead>
+				<tbody>
+					{
+						floorSpeakers.map((speaker) => (
+							<tr>
+								<td class="border-b border-[#2f5138]/16 px-3 py-2 align-top">
+									{speaker.name}
+								</td>
+								<td class="border-b border-[#2f5138]/16 px-3 py-2 align-top">
+									{speaker.house}
+								</td>
+								<td class="border-b border-[#2f5138]/16 px-3 py-2 align-top">
+									{speaker.floor}
+								</td>
+							</tr>
+						))
+					}
+				</tbody>
+			</table>
+		</div>
+	</section>
+
+	<section
+		class="w-full rounded-2xl border border-[#2f5138]/16 bg-[rgba(255,253,246,0.92)] p-4 shadow-[0_18px_45px_rgba(29,39,30,0.12)]"
+	>
+		<header
+			class="mb-4 flex items-center justify-between gap-4 max-[720px]:flex-col max-[720px]:items-start"
+		>
+			<div class="w-full">
+				<p
+					class="m-0 text-xs font-semibold uppercase tracking-[0.08em] text-[#7d8b81]"
+				>
+					Meeting schedule
+				</p>
+				<h2
+					class="m-0 mt-1 font-serif text-2xl font-bold tracking-[0.01em] text-[#223227]"
+				>
+					Upcoming meetings
+				</h2>
+			</div>
+		</header>
+		<div class="w-full overflow-x-auto">
+			<table class="w-full border-collapse text-left text-[0.95rem]">
+				<thead>
+					<tr>
+						<th
+							class="border-b border-[#2f5138]/16 px-3 py-2 text-left font-semibold text-[#2f5138]"
+							>Type</th
+						>
+						<th
+							class="border-b border-[#2f5138]/16 px-3 py-2 text-left font-semibold text-[#2f5138]"
+							>Day</th
+						>
+						<th
+							class="border-b border-[#2f5138]/16 px-3 py-2 text-left font-semibold text-[#2f5138]"
+							>Time</th
+						>
+						<th
+							class="border-b border-[#2f5138]/16 px-3 py-2 text-left font-semibold text-[#2f5138]"
+							>Location</th
+						>
+						<th
+							class="border-b border-[#2f5138]/16 px-3 py-2 text-left font-semibold text-[#2f5138]"
+							>Description</th
+						>
+					</tr>
+				</thead>
+				<tbody>
+					{
+						meetings.map((meeting) => (
+							<tr>
+								<td class="border-b border-[#2f5138]/16 px-3 py-2 align-top">
+									{meeting.type}
+								</td>
+								<td class="border-b border-[#2f5138]/16 px-3 py-2 align-top">
+									{meeting.day}
+								</td>
+								<td class="border-b border-[#2f5138]/16 px-3 py-2 align-top">
+									{meeting.time}
+								</td>
+								<td class="border-b border-[#2f5138]/16 px-3 py-2 align-top">
+									{meeting.location}
+								</td>
+								<td class="border-b border-[#2f5138]/16 px-3 py-2 align-top">
+									{meeting.description}
+								</td>
+							</tr>
+						))
+					}
+				</tbody>
+			</table>
+		</div>
+	</section>
+</PageShell>
