@@ -632,6 +632,10 @@ const initialFeaturedPosterId = initialFeaturedPoster?.id ?? '';
 	}
 
 	@media (max-width: 720px) {
+		.poster-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
 		.section-head,
 		.kiosk-card {
 			flex-direction: column;
