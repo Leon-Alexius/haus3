@@ -114,6 +114,21 @@ export const textAnnouncements: TextAnnouncement[] = [
 		body: 'Want to help with the content on this board? Contact the house speaker or submit a PR (see contact page for details).',
 		meta: 'Important',
 	},
+	{
+		title: 'Kiosk Opening Hours',
+		body: 'Every day from 19:00 till 21:00. Check the WhatsApp group for updates.',
+		meta: 'Kiosk',
+	},
+	{
+		title: 'Brotladen Opening Hours',
+		body: '-',
+		meta: 'Brotladen',
+	},
+	{
+		title: 'TribüHne Opening Hours',
+		body: '3-7 PM, Every day. Check the WhatsApp group for updates.',
+		meta: 'TribüHne',
+	},
 ];
 
 export const kioskUpdates: KioskUpdate[] = [
