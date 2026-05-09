@@ -18,10 +18,11 @@ export const floorSpeakers = [
 
 export const meetings = [
 	{
-		type: '-',
-		day: '-',
-		time: '-',
-		location: '-',
-		description: '-',
+		type: 'GHR Meetings',
+		day: 'See PDF',
+		time: 'See PDF',
+		location: 'See PDF',
+		description: 'Summer Semester 2026 Schedule',
+		pdfUrl: '/GHR_Termine Sommersemester 2026.pdf',
 	},
 ];
