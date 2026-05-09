@@ -25,4 +25,12 @@ export const meetings = [
 		description: 'Summer Semester 2026 Schedule',
 		pdfUrl: '/GHR_Termine Sommersemester 2026.pdf',
 	},
+	{
+		type: 'HVV',
+		day: 'TBD',
+		time: 'TBD',
+		location: 'TBD',
+		description: 'Past House General Assembly SS26',
+		pdfUrl: '/Haus3_hvv.pdf',
+	},
 ];
