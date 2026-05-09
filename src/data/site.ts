@@ -12,8 +12,8 @@ export const floorSpeakers = [
 	{ name: 'Johannes', house: 'House 3B', floor: 'Upper Floor' },
 	{ name: '-', house: 'House 3C', floor: 'Lower Floor' },
 	{ name: '-', house: 'House 3C', floor: 'Upper Floor' },
-	{ name: 'Amlan', house: 'House 3D', floor: 'Lower Floor' },
-	{ name: '-', house: 'House 3D', floor: 'Upper Floor' },
+	{ name: '-', house: 'House 3D', floor: 'Lower Floor' },
+	{ name: 'Amlan', house: 'House 3D', floor: 'Upper Floor' },
 ];
 
 export const meetings = [
