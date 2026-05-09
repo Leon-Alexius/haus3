@@ -6,9 +6,9 @@ export const houseSpeakerProfile = {
 };
 
 export const floorSpeakers = [
-	{ name: '-', house: 'House 3A', floor: 'Lower Floor' },
-	{ name: '-', house: 'House 3A', floor: 'Upper Floor' },
-	{ name: 'Aron Kopper', house: 'House 3B', floor: 'Lower Floor' },
+	{ name: 'Flavius', house: 'House 3A', floor: 'Lower & Upper Floor' },
+	{ name: 'Michi', house: 'House 3A', floor: 'Lower & Upper Floor' },
+	{ name: 'Aron', house: 'House 3B', floor: 'Lower Floor' },
 	{ name: 'Johannes', house: 'House 3B', floor: 'Upper Floor' },
 	{ name: '-', house: 'House 3C', floor: 'Lower Floor' },
 	{ name: '-', house: 'House 3C', floor: 'Upper Floor' },

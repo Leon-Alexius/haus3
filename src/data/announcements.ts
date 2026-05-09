@@ -46,7 +46,7 @@ export const posterEvents: PosterEvent[] = [
 			'Es ist soweit! Ihr könnt euch ab jetzt für Helferschichten am StuStaCulum eintragen und euch damit freien Eintritt, Getränkemarken, ein exclusives Helfershirt und eine tolle Zeit während eurer Schicht sichern. Unter helfen.stustaculum.de findet ihr eine Übersicht und könnt euch anmelden. Die Schichten sind begrenzt, also wartet nicht zu lange 🎼🍻👯',
 		date: '03 - 06 June 2026',
 		asset: stustaculumPoster,
-		manualOrder: 1,
+		manualOrder: 7,
 	},
 	{
 		id: 'haus-3-meeting-ss26',
@@ -55,7 +55,7 @@ export const posterEvents: PosterEvent[] = [
 		summary: 'The recurring house meeting notice for the summer semester 26.',
 		date: '05 June 2026',
 		asset: haus3MeetingSs26Poster,
-		manualOrder: 2,
+		manualOrder: 6,
 	},
 	{
 		id: 'scavenger-hunt',
@@ -65,7 +65,7 @@ export const posterEvents: PosterEvent[] = [
 			'🔑 Ready to unlock STUSTA? Join our Scavenger Hunt on 16th April at 4:30 PM and get ready to explore, laugh, and maybe get a little lost (on purpose 👀). Bring your curiosity, your friends, and your detective skills… because clues won’t solve themselves 😉',
 		date: '16 April 2026',
 		asset: scavengerHuntPoster,
-		manualOrder: 3,
+		manualOrder: 5,
 	},
 	{
 		id: 'how-to-stusta',
@@ -85,7 +85,7 @@ export const posterEvents: PosterEvent[] = [
 			"Jump behind the wheel — in Mario Kart, of course 🚗💨 Race your friends, enjoy some drinks and prove who's the real champion 🏁 Fun, competition & good vibes guaranteed — see you tonight! 🎉",
 		date: '14 April 2026',
 		asset: egonsMarioKartPoster,
-		manualOrder: 5,
+		manualOrder: 3,
 	},
 	{
 		id: 'mkh-gap-crawl',
@@ -95,7 +95,7 @@ export const posterEvents: PosterEvent[] = [
 			"For everyone who doesn't know about GAP-Crawl: It's a party in MKH where every floor organizes a drinking game on their floor. We will start in 8th floor and work our way down, playing a drinking game on every floor. We'll finish off in Kade for a big afterparty🥳🥳 Every game can also be played with non-alcoholic drinks of course for everybody who doesn't drink alcohol! So task for every floor: Think about an exciting game to be played in your floor by the whole house🍾🥳! See you there everybody🫡🍻!",
 		date: '24 April 2026',
 		asset: mkhGapCrawlPoster,
-		manualOrder: 6,
+		manualOrder: 2,
 	},
 	{
 		id: 'new-manager-hiring-kiosk',
@@ -104,7 +104,7 @@ export const posterEvents: PosterEvent[] = [
 		summary: 'We are looking for a new manager for Kultur Kiosk Siggi',
 		date: 'Until 08 May 2026',
 		asset: newManagerHiringKioskPoster,
-		manualOrder: 7,
+		manualOrder: 1,
 	},
 ];
 
@@ -128,6 +128,11 @@ export const textAnnouncements: TextAnnouncement[] = [
 		title: 'TribüHne Opening Hours',
 		body: '3-7 PM, Every day. Check the WhatsApp group for updates.',
 		meta: 'TribüHne',
+	},
+	{
+		title: 'NIK Security',
+		body: 'If you have any security concerns (e.g., suspicious entities), you can contact the NIK security team at +491725718161',
+		meta: 'Security',
 	},
 ];
 

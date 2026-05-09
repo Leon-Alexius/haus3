@@ -37,10 +37,10 @@ const initialFeaturedPosterId = initialFeaturedPoster?.id ?? '';
 			<label class="control">
 				<span>Sort</span>
 				<select id="posterSortSelect">
+					<option value="reverse">Reverse Manual</option>
 					<option value="manual">Manual</option>
 					<option value="title">Title A-Z</option>
 					<option value="tag">Tag A-Z</option>
-					<option value="reverse">Reverse</option>
 				</select>
 			</label>
 			<label class="control">
@@ -215,7 +215,7 @@ const initialFeaturedPosterId = initialFeaturedPoster?.id ?? '';
 	};
 
 	const sortCards = () => {
-		const sortMode = sortSelect?.value ?? 'manual';
+		const sortMode = sortSelect?.value ?? 'reverse';
 		const cards = getCards();
 		const posterIds = cards.map((card) => card.dataset.posterId);
 
