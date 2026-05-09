@@ -11,9 +11,10 @@ export const floorSpeakers = [
 	{ name: 'Aron', house: 'House 3B', floor: 'Lower Floor' },
 	{ name: 'Johannes', house: 'House 3B', floor: 'Upper Floor' },
 	{ name: '-', house: 'House 3C', floor: 'Lower Floor' },
-	{ name: '-', house: 'House 3C', floor: 'Upper Floor' },
-	{ name: '-', house: 'House 3D', floor: 'Lower Floor' },
+	{ name: 'Tobias', house: 'House 3C', floor: 'Upper Floor' },
+	{ name: 'Omar', house: 'House 3D', floor: 'Lower Floor' },
 	{ name: 'Amlan', house: 'House 3D', floor: 'Upper Floor' },
+	{ name: 'Antonina', house: 'Familienhäuser', floor: 'All Floors' },
 ];
 
 export const meetings = [
@@ -26,10 +27,10 @@ export const meetings = [
 		pdfUrl: '/GHR_Termine Sommersemester 2026.pdf',
 	},
 	{
-		type: 'HVV',
-		day: 'TBD',
-		time: 'TBD',
-		location: 'TBD',
+		type: 'HVV SS26',
+		day: '05.05.2026',
+		time: '8 PM',
+		location: 'Gap of House 3A',
 		description: 'Past House General Assembly SS26',
 		pdfUrl: '/Haus3_hvv.pdf',
 	},
