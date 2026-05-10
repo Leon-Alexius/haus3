@@ -12,7 +12,7 @@ export const floorSpeakers = [
 	{ name: 'Johannes', house: 'House 3B', floor: 'Upper Floor' },
 	{ name: '-', house: 'House 3C', floor: 'Lower Floor' },
 	{ name: 'Tobias', house: 'House 3C', floor: 'Upper Floor' },
-	{ name: 'Omar', house: 'House 3D', floor: 'Lower Floor' },
+	{ name: 'Julian', house: 'House 3D', floor: 'Lower Floor' },
 	{ name: 'Amlan', house: 'House 3D', floor: 'Upper Floor' },
 	{ name: 'Antonina', house: 'Familienhäuser', floor: 'All Floors' },
 ];
