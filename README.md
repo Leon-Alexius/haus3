@@ -1,8 +1,8 @@
 # Haus 3 Board
 
 <p align="left">
-  <img src="https://img.shields.io/badge/Astro-6.2.2-blueviolet?logo=astro&logoColor=white" alt="Astro 6.2.2" />
-  <img src="https://img.shields.io/badge/TailwindCSS-4.2-38bdf8?logo=tailwindcss&logoColor=white" alt="TailwindCSS 4.2" />
+  <img src="https://img.shields.io/badge/Astro-6.3.1-blueviolet?logo=astro&logoColor=white" alt="Astro 6.3.1" />
+  <img src="https://img.shields.io/badge/TailwindCSS-4.3-38bdf8?logo=tailwindcss&logoColor=white" alt="TailwindCSS 4.3" />
   <img src="https://img.shields.io/badge/Node-24.15%2B-339933?logo=nodedotjs&logoColor=white" alt="Node 24.15+" />
   <img src="https://img.shields.io/badge/License-MIT-green" alt="MIT License" />
 </p>
