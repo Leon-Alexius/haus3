@@ -34,4 +34,12 @@ export const meetings = [
 		description: 'Past House General Assembly SS26',
 		pdfUrl: '/Haus3_hvv.pdf',
 	},
+	{
+		type: 'Heimratsversammlung',
+		day: 'TBD',
+		time: 'TBD',
+		location: 'TBD',
+		description: 'TBD',
+		pdfUrl: '',
+	},
 ];
