@@ -121,9 +121,9 @@ export const posterEvents: PosterEvent[] = [
 
 export const textAnnouncements: TextAnnouncement[] = [
 	{
-		title: 'Content Accuracy Notice',
-		body: 'Want to help with the content on this board? Contact the house speaker or submit a PR (see contact page for details).',
-		meta: 'Important',
+		title: "Information Disclaimer",
+		body: "All information on this page is provided as-is and may not always reflect the most current or official updates. This content does not replace announcements from official StuSta bodies or StuWerk. For corrections or contributions, please contact the house speaker or submit a PR (see contact page for details).",
+		meta: "Important"
 	},
 	{
 		title: 'Kiosk Opening Hours',
@@ -142,7 +142,7 @@ export const textAnnouncements: TextAnnouncement[] = [
 	},
 	{
 		title: 'NIK Security',
-		body: 'If you have any security concerns (e.g., suspicious individuals), you can contact the NIK security team at +49 172 5718161.',
+		body: 'If you have any security concerns (e.g., suspicious individuals), please contact the NIK Security Team at +49 172 5718161. They are available from 22:00 until the morning. For emergencies, contact the police at 110.',
 		meta: 'Security',
 	},
 ];
