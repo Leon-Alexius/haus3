@@ -5,7 +5,9 @@ import mkhGapCrawlPoster from '../assets/posters/mkh-gap-crawl.jpeg';
 import newManagerHiringKioskPoster from '../assets/posters/new-manager-hiring-kiosk.jpeg';
 import scavengerHuntPoster from '../assets/posters/scavenger-hunt.jpeg';
 import stustaculumPoster from '../assets/posters/stustaculum.jpeg';
-import ghrEnvironmentalOfficerHiring from '../assets/posters/ghr-environmental-officer-hiring.jpg';
+import environmentalOfficerHiring from '../assets/posters/environmental-officer-hiring.jpg';
+import finanzvorstandHiring from '../assets/posters/finanzvorstand-hiring.jpg';
+import teamvorstaendeHiring from '../assets/posters/teamvorstaende-hiring.jpg';
 
 export type AnnouncementStat = {
 	label: string;
@@ -40,14 +42,14 @@ export type KioskUpdate = {
 
 export const posterEvents: PosterEvent[] = [
 	{
-		id: 'ghr-environmental-officer-hiring',
+		id: 'environmental-officer-hiring',
 		title: 'Environmental Officer Hiring',
-		tag: 'GHR',
+		tag: 'Position',
 		summary:
 			'Protecting the environment means securing the future. 🌎🌱 Are you ready for this responsibility? 👍🏻 Then apply now! 💻 Send your application by 25.06.2026 to orgtutor@stusta.de',
 		date: '29 June 2026',
-		asset: ghrEnvironmentalOfficerHiring,
-		manualOrder: 8,
+		asset: environmentalOfficerHiring,
+		manualOrder: 10,
 	},
 	{
 		id: 'stustaculum',
@@ -57,16 +59,27 @@ export const posterEvents: PosterEvent[] = [
 			'Es ist soweit! Ihr könnt euch ab jetzt für Helferschichten am StuStaCulum eintragen und euch damit freien Eintritt, Getränkemarken, ein exclusives Helfershirt und eine tolle Zeit während eurer Schicht sichern. Unter helfen.stustaculum.de findet ihr eine Übersicht und könnt euch anmelden. Die Schichten sind begrenzt, also wartet nicht zu lange 🎼🍻👯',
 		date: '03 - 06 June 2026',
 		asset: stustaculumPoster,
-		manualOrder: 7,
+		manualOrder: 9,
 	},
 	{
-		id: 'haus-3-meeting-ss26',
-		title: 'Haus 3 Meeting SS26',
-		tag: 'House',
-		summary: 'The recurring house meeting notice for the summer semester 26.',
-		date: '05 June 2026',
-		asset: haus3MeetingSs26Poster,
-		manualOrder: 6,
+		id: 'finanzvorstand-hiring',
+		title: 'Finanzvorstand Hiring',
+		tag: 'Position',
+		summary:
+			'Send your application by 22.05.2026 to vorstand@selbstverwaltung-stusta.de',
+		date: '26 May 2026',
+		asset: finanzvorstandHiring,
+		manualOrder: 8,
+	},
+	{
+		id: 'teamvorstaende-hiring',
+		title: 'Teamvorstände Hiring',
+		tag: 'Position',
+		summary:
+			'Send your application by 22.05.2026 to vorstand@selbstverwaltung-stusta.de',
+		date: '26 May 2026',
+		asset: teamvorstaendeHiring,
+		manualOrder: 7,
 	},
 	{
 		id: 'new-manager-hiring-kiosk',
@@ -75,6 +88,15 @@ export const posterEvents: PosterEvent[] = [
 		summary: 'We are looking for a new manager for Kultur Kiosk Siggi',
 		date: 'Until 08 May 2026',
 		asset: newManagerHiringKioskPoster,
+		manualOrder: 6,
+	},
+	{
+		id: 'haus-3-meeting-ss26',
+		title: 'Haus 3 Meeting SS26',
+		tag: 'House',
+		summary: 'The recurring house meeting notice for the summer semester 26.',
+		date: '05 May 2026',
+		asset: haus3MeetingSs26Poster,
 		manualOrder: 5,
 	},
 	{
