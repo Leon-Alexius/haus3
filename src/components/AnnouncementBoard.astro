@@ -134,16 +134,25 @@ const initialFeaturedPosterId = initialFeaturedPoster?.id ?? '';
 			</div>
 		</article>
 
-		<!--
 		<article id="kiosk" class="panel kiosk-panel">
 			<header class="section-head">
 				<div>
 					<p class="eyebrow">StuSta Kiosk</p>
-					<h3>{kioskUpdates.length} kiosk update(s)</h3>
+					<h3>{kioskUpdates.length} Kiosk Notice(s)</h3>
 				</div>
 			</header>
-
+			
 			<div class="kiosk-list">
+				<article class="kiosk-card">
+					<div>
+						<h4>Kiosk Website</h4>
+						<a href="https://www.kiosk-siggi.de/info" target="_blank" rel="noopener noreferrer" class="hover:underline">
+							https://www.kiosk-siggi.de/info
+						</a>
+					</div>
+				</article>
+
+				<!--
 				{
 					kioskUpdates.map((item) => (
 						<article class="kiosk-card">
@@ -151,13 +160,13 @@ const initialFeaturedPosterId = initialFeaturedPoster?.id ?? '';
 								<h4>{item.title}</h4>
 								<p>{item.detail}</p>
 							</div>
-							<strong>{item.price}</strong>
+								<strong>{item.price}</strong> 
 						</article>
 					))
 				}
+				-->
 			</div>
 		</article>
-		 -->
 	</div>
 </section>
 
