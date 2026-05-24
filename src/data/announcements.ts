@@ -8,6 +8,7 @@ import stustaculumPoster from '../assets/posters/stustaculum.jpeg';
 import environmentalOfficerHiring from '../assets/posters/environmental-officer-hiring.jpg';
 import finanzvorstandHiring from '../assets/posters/finanzvorstand-hiring.jpg';
 import teamvorstaendeHiring from '../assets/posters/teamvorstaende-hiring.jpg';
+import heimratsversammlung from '../assets/posters/heimratsversammlung.png';
 
 export type AnnouncementStat = {
 	label: string;
@@ -49,7 +50,7 @@ export const posterEvents: PosterEvent[] = [
 			'Protecting the environment means securing the future. 🌎🌱 Are you ready for this responsibility? 👍🏻 Then apply now! 💻 Send your application by 25.06.2026 to orgtutor@stusta.de',
 		date: '29 June 2026',
 		asset: environmentalOfficerHiring,
-		manualOrder: 10,
+		manualOrder: 11,
 	},
 	{
 		id: 'stustaculum',
@@ -59,6 +60,16 @@ export const posterEvents: PosterEvent[] = [
 			'Es ist soweit! Ihr könnt euch ab jetzt für Helferschichten am StuStaCulum eintragen und euch damit freien Eintritt, Getränkemarken, ein exclusives Helfershirt und eine tolle Zeit während eurer Schicht sichern. Unter helfen.stustaculum.de findet ihr eine Übersicht und könnt euch anmelden. Die Schichten sind begrenzt, also wartet nicht zu lange 🎼🍻👯',
 		date: '03 - 06 June 2026',
 		asset: stustaculumPoster,
+		manualOrder: 10,
+	},
+	{
+		id: 'heimratsversammlung',
+		title: 'Heimratsversammlung',
+		tag: 'House',
+		summary:
+			'Hello everyone! Our Heimratsversammlung (House 3 meeting) will take place on Thursday, 28 May 2026 at 20:00 in a hybrid format. You can join offline in House 3B GAP or online via the link that will be shared soon. Everyone is welcome to attend and bring up issues, ideas, or suggestions for the house. Only floorspeakers will vote, but all residents can participate in the discussion and share anything relevant. Looking forward to seeing you there!',
+		date: '28 May 2026',
+		asset: heimratsversammlung,
 		manualOrder: 9,
 	},
 	{

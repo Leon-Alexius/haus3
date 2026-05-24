@@ -6,8 +6,8 @@ export const houseSpeakerProfile = {
 };
 
 export const floorSpeakers = [
-	{ name: 'Flavius', house: 'House 3A', floor: 'Lower & Upper Floor' },
-	{ name: 'Michi', house: 'House 3A', floor: 'Lower & Upper Floor' },
+	{ name: 'Flavius', house: 'House 3A', floor: 'All Floors' },
+	{ name: 'Michi', house: 'House 3A', floor: 'All Floors' },
 	{ name: 'Aron', house: 'House 3B', floor: 'Lower Floor' },
 	{ name: 'Johannes', house: 'House 3B', floor: 'Upper Floor' },
 	{ name: 'Sai', house: 'House 3C', floor: 'Lower Floor' },
@@ -36,10 +36,10 @@ export const meetings = [
 	},
 	{
 		type: 'Heimratsversammlung',
-		day: 'TBD',
-		time: 'TBD',
-		location: 'TBD',
-		description: 'TBD',
+		day: '28.05.2026',
+		time: '20:00',
+		location: 'Hybrid (Haus 3B GAP & Online TBD)',
+		description: 'House 3 Meeting',
 		pdfUrl: '',
 	},
 ];
