@@ -9,6 +9,9 @@ import environmentalOfficerHiring from '../assets/posters/environmental-officer-
 import finanzvorstandHiring from '../assets/posters/finanzvorstand-hiring.jpg';
 import teamvorstaendeHiring from '../assets/posters/teamvorstaende-hiring.jpg';
 import heimratsversammlung from '../assets/posters/heimratsversammlung.png';
+import delegateRecruitment from '../assets/posters/House-3-Delegate-Election-Poster.png';
+import beiratRecruitment from '../assets/posters/House-3-Beirat-Recruitment-Poster.png';
+import hvvws2627 from '../assets/posters/HVV-WS2627-Announcement.jpg';
 
 export type AnnouncementStat = {
 	label: string;
@@ -42,6 +45,36 @@ export type KioskUpdate = {
 };
 
 export const posterEvents: PosterEvent[] = [
+	{
+		id: 'house-general-assembly-ws26',
+		title: 'House General Assembly WS26',
+		tag: 'House',
+		summary:
+			'House meeting on 20.10 at 8 PM. Attendance is mandatory. Drinks and snacks included.',
+		date: '20 October 2026',
+		asset: hvvws2627,
+		manualOrder: 14,
+	},
+	{
+		id: 'beirat-recruitment',
+		title: 'Beirat Recruitment',
+		tag: 'Position',
+		summary:
+			'📢 House 3 needs a Beirat! Join our team and help shape the future of our house.',
+		date: '20 October 2026',
+		asset: beiratRecruitment,
+		manualOrder: 13,
+	},
+	{
+		id: 'delegate-recruitment',
+		title: 'Delegate Recruitment',
+		tag: 'Position',
+		summary:
+			'Want to help represent House 3 without taking on the full responsibility of being House Speaker? Become a Delegate!',
+		date: '20 October 2026',
+		asset: delegateRecruitment,
+		manualOrder: 12,
+	},
 	{
 		id: 'environmental-officer-hiring',
 		title: 'Environmental Officer Hiring',
