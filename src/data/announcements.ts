@@ -207,8 +207,13 @@ export const textAnnouncements: TextAnnouncement[] = [
 		meta: 'TribüHne',
 	},
 	{
+		title: 'StuSta Gym Opening Hours',
+		body: '7:00-9:00 in the morning (week). 9:00-11:00 in the morning (weekend). 17:00-23:00 in the evening. Check the WhatsApp group for updates & women only schedules.',
+		meta: 'StuSta Gym',
+	},
+	{
 		title: 'NIK Security',
-		body: 'If you have any security concerns (e.g., suspicious individuals), please contact the NIK Security Team at +49 172 5718161. They are available from 22:00 until the morning. For emergencies, contact the police at 110.',
+		body: 'If you have any security concerns (e.g., suspicious individuals), please contact the NIK Security Team (contact number is in WhatsApp group description). They are available from 22:00 until the morning. For emergencies, contact the police at 110.',
 		meta: 'Security',
 	},
 ];
