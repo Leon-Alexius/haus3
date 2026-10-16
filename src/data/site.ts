@@ -1,5 +1,5 @@
 export const houseSpeakerProfile = {
-	name: 'Leon Alexius',
+	name: 'Leon A.',
 	role: 'Haussprecher / House Representative of House 3',
 	coverage: 'House 3A-D plus Houses 17, 18, and 19',
 	lead: 'Central contact for House 3 communication, resident updates, event planning, and issue escalation.',
