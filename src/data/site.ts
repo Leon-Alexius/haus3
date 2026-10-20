@@ -48,7 +48,7 @@ export const meetings = [
 		time: '8 PM',
 		location: 'EWH-Vorbau (Building 4\'s Annex)',
 		description: 'House General Assembly WS26',
-		pdfUrl: '',
+		pdfUrl: '/Haus3_HVV_WS26_Leon.pdf',
 	},
 	{
 		type: 'Heimratsversammlung WS26',
